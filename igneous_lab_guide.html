@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Igneous Rock Lab — Physical Geology 2001</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f4f0;color:#1a1a1a;min-height:100vh}
+.wrap{max-width:780px;margin:0 auto;padding:24px 16px 60px}
+h1{font-size:22px;font-weight:600;margin-bottom:4px}
+.subtitle{font-size:13px;color:#666;margin-bottom:20px}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+nav button{padding:6px 12px;font-size:12px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer;color:#333;transition:all .15s}
+nav button:hover{border-color:#b5451b;color:#b5451b}
+nav button.active{background:#fdf0ec;border-color:#b5451b;color:#b5451b;font-weight:500}
+.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px 22px;margin-bottom:12px}
+h2{font-size:18px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.intro{font-size:14px;line-height:1.7;color:#444;margin-bottom:14px}
+.criterion{display:flex;gap:10px;padding:10px 12px;background:#f7f7f5;border-radius:0 6px 6px 0;border-left:3px solid #b5451b;margin-bottom:6px}
+.cnum{min-width:22px;height:22px;border-radius:50%;background:#fdf0ec;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#b5451b;flex-shrink:0}
+.clabel{font-size:13px;font-weight:600;margin-bottom:2px}
+.cdesc{font-size:12px;color:#555}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:14px}
+.lcard{padding:10px 12px;background:#f7f7f5;border-radius:8px;border-top:3px solid #888}
+.lname{font-size:13px;font-weight:600;margin-bottom:4px}
+.ldesc{font-size:12px;color:#555;line-height:1.5;margin-bottom:4px}
+.lexample{font-size:11px;color:#888}
+.note{font-size:12px;color:#555;background:#f7f7f5;padding:8px 12px;border-radius:6px;margin-top:8px;line-height:1.6}
+.tip{font-size:12px;color:#2a6a2a;background:#edf7ed;padding:8px 12px;border-radius:0 6px 6px 0;border-left:3px solid #4caf50;margin-top:8px;line-height:1.6}
+.section-divider{font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin:14px 0 8px}
+.quiz-section{margin-top:16px;border-top:1px solid #eee;padding-top:16px}
+.quiz-label{font-size:12px;font-weight:600;color:#555;margin-bottom:8px}
+.quiz-q{font-size:14px;margin-bottom:10px;line-height:1.6}
+.opt{width:100%;text-align:left;padding:8px 12px;font-size:13px;background:#f7f7f5;border:1px solid #ddd;border-radius:6px;cursor:pointer;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;font-family:inherit;color:#1a1a1a;transition:background .1s}
+.opt:hover:not(:disabled){background:#fdf0ec;border-color:#b5451b}
+.opt.correct{background:#edf7ed;border-color:#4caf50}
+.opt.wrong{background:#fdecea;border-color:#e53935}
+.expl{font-size:12px;margin:2px 0 6px 12px;line-height:1.5}
+.expl.good{color:#2a6a2a}
+.expl.bad{color:#b71c1c}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.pager button{padding:7px 16px;font-size:13px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer;color:#333;transition:all .15s}
+.pager button:hover:not(:disabled){border-color:#b5451b;color:#b5451b}
+.pager button:disabled{opacity:0.35;cursor:not-allowed}
+.pgcount{font-size:12px;color:#888}
+.bowens-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;margin-bottom:4px;font-size:13px;cursor:pointer;transition:background .15s;border:1px solid transparent}
+.bowens-row:hover{background:#fdf0ec;border-color:#e8b49a}
+.bowens-row.active{background:#fdf0ec;border-color:#b5451b}
+.b-temp{font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+.b-high{background:#fdecea;color:#b71c1c}
+.b-mid{background:#fff8e8;color:#7a5000}
+.b-low{background:#e8f0fb;color:#0d47a1}
+.b-minerals{font-size:12px;color:#555;flex:1}
+.b-rocks{font-size:12px;font-weight:600;color:#b5451b;white-space:nowrap}
+.b-detail{display:none;font-size:12px;color:#444;padding:8px 12px 8px 40px;background:#f7f7f5;border-radius:0 0 6px 6px;line-height:1.6;margin-top:-4px;margin-bottom:4px}
+.b-detail.show{display:block}
+.texture-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:14px}
+.tex-card{padding:10px 12px;background:#f7f7f5;border-radius:8px;border-left:3px solid #b5451b}
+.tex-name{font-size:13px;font-weight:700;margin-bottom:3px}
+.tex-rate{font-size:11px;color:#b5451b;font-weight:600;margin-bottom:4px}
+.tex-desc{font-size:12px;color:#555;line-height:1.5}
+.tex-ex{font-size:11px;color:#888;margin-top:4px}
+.cl-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:12px}
+.cl-table th{background:#fdf0ec;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #e8b49a;font-size:12px}
+.cl-table td{padding:7px 10px;border:1px solid #ddd;vertical-align:top;line-height:1.5}
+.cl-table tr:nth-child(even) td{background:#f7f7f5}
+.tect-row{display:flex;gap:12px;padding:10px 12px;background:#f7f7f5;border-radius:8px;margin-bottom:6px}
+.tect-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.tect-name{font-size:13px;font-weight:600;margin-bottom:2px}
+.tect-desc{font-size:12px;color:#555;line-height:1.6}
+.profile-block{border:1px solid #ddd;border-radius:10px;padding:14px;margin-bottom:12px}
+.pb-title{font-size:14px;font-weight:600;margin-bottom:10px}
+.field-label{font-size:12px;color:#555;display:block;margin-bottom:4px;margin-top:6px}
+select,textarea,input[type=text]{width:100%;font-size:13px;border:1px solid #ccc;border-radius:6px;padding:7px 10px;font-family:inherit;color:#1a1a1a;background:#fff;margin-bottom:4px;resize:vertical}
+select:focus,textarea:focus,input[type=text]:focus{outline:2px solid #b5451b;border-color:#b5451b}
+.example-box{padding:10px 14px;background:#edf7ed;border:1px solid #b2dfb2;border-radius:8px;margin-bottom:16px;font-size:13px}
+.ex-title{font-weight:600;color:#2a6a2a;margin-bottom:6px}
+.ex-line{color:#444;line-height:1.7;margin-bottom:2px}
+.export-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:center;gap:12px;align-items:center;z-index:100}
+.btn-export{padding:8px 20px;font-size:13px;font-weight:600;background:#b5451b;color:#fff;border:none;border-radius:6px;cursor:pointer}
+.btn-export:hover{background:#933a16}
+.fc-wrap{overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Igneous Rock Lab</h1>
+<p class="subtitle">Physical Geology 2001 &nbsp;·&nbsp; Read through all sections before identifying samples</p>
+
+<div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+  <label style="font-size:13px;color:#555;white-space:nowrap">Your name:</label>
+  <input type="text" id="studentName" placeholder="Enter your name" style="width:220px;margin-bottom:0">
+  <span style="font-size:12px;color:#aaa">Used on your exported submission file</span>
+</div>
+
+<nav id="nav"></nav>
+<div id="content"></div>
+<div class="pager">
+  <button id="prev">← Previous</button>
+  <span class="pgcount" id="pgcount"></span>
+  <button id="next">Next →</button>
+</div>
+<div style="height:60px"></div>
+</div>
+
+<div class="export-bar">
+  <span>When finished:</span>
+  <button class="btn-export" onclick="exportWork()">⬇ Download my work</button>
+  <span style="font-size:12px;color:#aaa">Saves all quiz answers and rock profiles as a .txt file</span>
+</div>
+
+<script>
+const ROCKS = ["Andesite","Basalt","Diorite","Gabbro","Granite","Obsidian","Pumice","Rhyolite","Rhyolite Porphyry","Vesicular Basalt"];
+
+let current = 0;
+const work = {
+  profile1:{rock:"",texture:"",composition:"",tectonic:"",connection:""},
+  profile2:{rock:"",texture:"",composition:"",tectonic:"",connection:""},
+  quizAnswers:{},
+};
+
+function saveProfile(){
+  [1,2].forEach(n=>{
+    ["rock","texture","composition","tectonic","connection"].forEach(f=>{
+      const el=document.getElementById(`p${f}${n}`);
+      if(el) work[`profile${n}`][f]=el.value;
+    });
+  });
+}
+
+const SECTIONS=[
+  {id:"intro",title:"Igneous rocks",icon:"🌋"},
+  {id:"composition",title:"Composition",icon:"🎨"},
+  {id:"bowens",title:"Bowen's reaction series",icon:"🌡️"},
+  {id:"texture",title:"Texture",icon:"🔎"},
+  {id:"classification",title:"Classification",icon:"🗂️"},
+  {id:"tectonics",title:"Igneous rocks & tectonics",icon:"🌍"},
+  {id:"profile",title:"Rock profile",icon:"📝"},
+];
+
+function buildNav(){
+  const nav=document.getElementById("nav");
+  nav.innerHTML="";
+  SECTIONS.forEach((s,i)=>{
+    const b=document.createElement("button");
+    b.textContent=s.icon+" "+s.title;
+    if(i===current)b.classList.add("active");
+    b.onclick=()=>{saveCurrent();current=i;render();};
+    nav.appendChild(b);
+  });
+}
+
+function saveCurrent(){
+  saveProfile();
+}
+
+function quizHTML(secId,q){
+  const chosen=work.quizAnswers[secId];
+  const revealed=chosen!==undefined;
+  let html=`<div class="quiz-section"><div class="quiz-label">❓ Check your understanding</div><div class="quiz-q">${q.q}</div>`;
+  q.opts.forEach((opt,i)=>{
+    let cls="opt"; let mark="";
+    if(revealed){
+      if(i===q.ans){cls+=" correct";mark=" ✓";}
+      else if(i===chosen){cls+=" wrong";mark=" ✗";}
+    }
+    html+=`<button class="${cls}" onclick="answerQuiz('${secId}',${i})" ${revealed?"disabled":""}>${opt}${mark}</button>`;
+    if(revealed&&i===chosen) html+=`<div class="expl ${i===q.ans?'good':'bad'}">${q.expl[i]}</div>`;
+    if(revealed&&i!==chosen&&i===q.ans) html+=`<div class="expl good">${q.expl[i]}</div>`;
+  });
+  return html+"</div>";
+}
+
+function answerQuiz(secId,idx){
+  work.quizAnswers[secId]=idx;
+  render();
+}
+window.answerQuiz=answerQuiz;
+
+function toggleBowens(id){
+  const el=document.getElementById(id);
+  const row=document.getElementById(id+"-row");
+  if(!el||!row)return;
+  const open=el.classList.contains("show");
+  el.classList.toggle("show",!open);
+  row.classList.toggle("active",!open);
+}
+window.toggleBowens=toggleBowens;
+
+// ===================== SECTION HTML =====================
+function introHTML(){
+  const quiz={q:"Which of the following correctly describes an EXTRUSIVE igneous rock?",
+    opts:["Forms from magma that slowly cools underground","Forms from lava that cools rapidly at the surface","Forms when sediments are compacted and cemented","Forms when rocks are subjected to heat and pressure"],
+    ans:1,
+    expl:["That describes an intrusive rock, which cools slowly beneath the surface.",
+          "Correct! Extrusive rocks form from lava at the surface and cool rapidly.",
+          "That describes sedimentary rock formation.",
+          "That describes metamorphic rock formation."]};
+  return `<div class="card"><h2>🌋 What are igneous rocks?</h2>
+  <p class="intro">Igneous rocks form from the cooling and solidification of molten rock. They are Earth's original rocks and make up the majority of the crust and mantle. Understanding where and how they form gives us a window into Earth's interior and tectonic history.</p>
+  <div class="criterion"><div class="cnum">1</div><div><div class="clabel">Magma vs. Lava</div><div class="cdesc">Molten rock beneath the surface is called <strong>magma</strong>. When it reaches the surface, it is called <strong>lava</strong>. Both produce igneous rocks — the difference is where they solidify.</div></div></div>
+  <div class="criterion"><div class="cnum">2</div><div><div class="clabel">Intrusive (Plutonic)</div><div class="cdesc">Magma that cools slowly <strong>beneath the surface</strong>. The slow cooling allows large crystals to grow. Examples: granite, gabbro, diorite.</div></div></div>
+  <div class="criterion"><div class="cnum">3</div><div><div class="clabel">Extrusive (Volcanic)</div><div class="cdesc">Lava that cools rapidly <strong>at the surface</strong>. Rapid cooling produces small or no crystals. Examples: basalt, rhyolite, obsidian.</div></div></div>
+  <div class="tip" style="margin-top:10px">💡 Think of it this way: the Earth is a great insulator. Magma buried deep underground stays hot for millions of years. Lava on the surface loses heat rapidly to the air or ocean — sometimes in seconds.</div>
+  ${quizHTML("intro",quiz)}</div>`;
+}
+
+function compositionHTML(){
+  const quiz={q:"A rock sample is dark green-black and dominated by pyroxene and calcium-rich plagioclase. What is its composition?",
+    opts:["Felsic","Intermediate","Mafic","Ultramafic"],
+    ans:2,
+    expl:["Felsic rocks are light-colored and dominated by quartz and K-feldspar.",
+          "Intermediate rocks show a mix of light and dark minerals.",
+          "Correct! Dark color, pyroxene, and Ca-plagioclase are all indicators of mafic composition.",
+          "Ultramafic rocks are dominated by olivine and pyroxene with no feldspar — even darker and denser than mafic."]};
+  return `<div class="card"><h2>🎨 Composition</h2>
+  <p class="intro">The composition of an igneous rock is determined by the <strong>silica (SiO₂) content</strong> of the original magma. Silica content controls which minerals crystallize and directly affects the rock's color — making color a useful first classification tool.</p>
+  <div class="section-divider">Compositional categories</div>
+  <div class="grid2">
+    <div class="lcard" style="border-top-color:#e8a87c"><div class="lname">Felsic</div><div class="ldesc">65–75% SiO₂. Rich in silica and feldspar. Light-colored: whites, creams, pinks. Forms at relatively low temperatures (~650–800°C).</div><div class="lexample">Granite, Rhyolite, Obsidian, Pumice</div></div>
+    <div class="lcard" style="border-top-color:#b0b860"><div class="lname">Intermediate</div><div class="ldesc">55–65% SiO₂. Mix of light and dark minerals. Gray or greenish-gray in color. Forms at moderate temperatures (~800–1000°C).</div><div class="lexample">Diorite, Andesite</div></div>
+    <div class="lcard" style="border-top-color:#607090"><div class="lname">Mafic</div><div class="ldesc">45–55% SiO₂. Rich in magnesium and iron (MAFic). Dark-colored: dark grays, greens, blacks. Forms at high temperatures (~1000–1200°C).</div><div class="lexample">Gabbro, Basalt, Vesicular Basalt</div></div>
+    <div class="lcard" style="border-top-color:#3a6040"><div class="lname">Ultramafic</div><div class="ldesc">&lt;45% SiO₂. Nearly all olivine and pyroxene. Very dark green. Forms at very high temperatures (&gt;1200°C). Rare at surface.</div><div class="lexample">Peridotite, Dunite</div></div>
+  </div>
+  <div class="note">⚠️ Color is a useful guide but not absolute. Obsidian is black but is actually felsic in composition — its dark color comes from trace iron, not mafic mineralogy. Always consider texture and mineral content together with color.</div>
+  ${quizHTML("composition",quiz)}</div>`;
+}
+
+function bowensHTML(){
+  const quiz={q:"According to Bowen's reaction series, which mineral crystallizes at the LOWEST temperature?",
+    opts:["Olivine","Pyroxene (Augite)","Potassium feldspar","Quartz"],
+    ans:3,
+    expl:["Olivine crystallizes at very high temperatures (~1200°C+) — it's the first mineral to form.",
+          "Pyroxene crystallizes at high temperatures, after olivine but well before feldspar and quartz.",
+          "K-feldspar crystallizes at low temperature but quartz crystallizes last, at the very lowest temperatures.",
+          "Correct! Quartz is the last mineral to crystallize in Bowen's series, at the lowest temperatures (~700–750°C). This is why it's so abundant in felsic rocks."]};
+
+  const tiers=[
+    {id:"b-high",tempClass:"b-high",temp:"High temp (~1200°C+)",
+     minerals:"Olivine → Pyroxene (Augite)",
+     rocks:"Ultramafic / Mafic",
+     detail:"At the highest temperatures, olivine is the first mineral to crystallize from a mafic magma. As cooling continues, olivine reacts with the melt to produce pyroxene. These minerals are very poor in silica and rich in iron and magnesium — giving mafic and ultramafic rocks their dark color. Rocks: Peridotite, Gabbro, Basalt."},
+    {id:"b-mid",tempClass:"b-mid",temp:"Intermediate temp (~900–1000°C)",
+     minerals:"Amphibole (Hornblende) → Ca/Na-Plagioclase Feldspar",
+     rocks:"Intermediate",
+     detail:"At intermediate temperatures, hornblende and sodium-to-calcium plagioclase feldspar crystallize. These minerals have moderate silica content and produce the 'salt-and-pepper' appearance of intermediate rocks. The balance of light feldspar and dark hornblende gives intermediate rocks their mixed color. Rocks: Diorite, Andesite."},
+    {id:"b-low",tempClass:"b-low",temp:"Low temp (~700–800°C)",
+     minerals:"Biotite → K-feldspar → Muscovite → Quartz",
+     rocks:"Felsic",
+     detail:"The last minerals to crystallize are potassium feldspar, muscovite mica, and finally quartz. These are all silica-rich minerals that give felsic rocks their light color. Because they crystallize last, they fill in the spaces between earlier-formed minerals in slow-cooling intrusive rocks. Quartz, the last to form, is highly resistant to weathering and very common at Earth's surface. Rocks: Granite, Rhyolite, Obsidian."},
+  ];
+
+  let h=`<div class="card"><h2>🌡️ Bowen's Reaction Series</h2>
+  <p class="intro">N.L. Bowen experimentally determined the sequence in which minerals crystallize from a cooling magma. This sequence — called Bowen's Reaction Series — explains why different igneous rocks contain different minerals, and why composition is linked to temperature.</p>
+  <div class="section-divider">Three temperature tiers — click each to expand</div>`;
+
+  tiers.forEach(t=>{
+    h+=`<div class="bowens-row" id="${t.id}-row" onclick="toggleBowens('${t.id}')">
+      <span class="b-temp ${t.tempClass}">${t.temp}</span>
+      <span class="b-minerals">${t.minerals}</span>
+      <span class="b-rocks">${t.rocks} →</span>
+    </div>
+    <div class="b-detail" id="${t.id}">${t.detail}</div>`;
+  });
+
+  h+=`<div class="note" style="margin-top:10px">🔑 Key takeaway: The temperature at which a magma cools determines which minerals form, which determines the rock's composition (mafic vs. felsic), which determines the rock's color. Composition and color are therefore a record of the original magma temperature.</div>`;
+  h+=quizHTML("bowens",quiz)+"</div>";
+  return h;
+}
+
+function textureHTML(){
+  const quiz={q:"A rock has large feldspar crystals (phenocrysts) surrounded by a very fine-grained gray matrix. What texture does it have, and what does this tell you about its cooling history?",
+    opts:["Phaneritic — cooled slowly underground throughout","Aphanitic — cooled rapidly at the surface throughout","Porphyritic — started cooling slowly, then erupted and cooled rapidly","Glassy — quenched instantly in water"],
+    ans:2,
+    expl:["Phaneritic rocks have uniformly large crystals throughout — no fine-grained matrix.",
+          "Aphanitic rocks have uniformly fine grains — no large phenocrysts.",
+          "Correct! The large phenocrysts formed during slow underground cooling; the fine matrix formed after the magma erupted and cooled rapidly. This two-stage history is the hallmark of porphyritic texture.",
+          "Glassy rocks have no crystals at all — they are volcanic glass."]};
+
+  const textures=[
+    {name:"Phaneritic",rate:"Slow cooling — intrusive",desc:"All crystals are large enough to see with the naked eye (typically >1mm). Minerals are interlocked. Cooled slowly underground over millions of years.",ex:"Granite, Gabbro, Diorite"},
+    {name:"Aphanitic",rate:"Rapid cooling — extrusive",desc:"Crystals are too small to see individually without a microscope. Surface looks smooth and uniform. Cooled quickly at or near the surface.",ex:"Basalt, Rhyolite, Andesite"},
+    {name:"Porphyritic",rate:"Two-stage — mixed",desc:"Large crystals (phenocrysts) set in a fine-grained matrix (groundmass). Two clearly different grain sizes visible. Started slow (intrusive), then erupted.",ex:"Rhyolite Porphyry, Andesite Porphyry"},
+    {name:"Glassy",rate:"Extremely rapid — extrusive",desc:"No crystals at all — cooled so fast that atoms had no time to arrange into crystal structures. Smooth, glass-like texture with conchoidal fracture.",ex:"Obsidian"},
+    {name:"Vesicular",rate:"Rapid cooling with gas",desc:"Contains numerous rounded holes (vesicles) formed by gas bubbles trapped during rapid solidification. Can be glassy or aphanitic.",ex:"Pumice (glassy), Vesicular Basalt (aphanitic)"},
+    {name:"Pegmatitic",rate:"Very slow, water-rich",desc:"Extremely large crystals, often tens of centimeters. Water dissolved in the magma allows ions to migrate over great distances, growing massive crystals.",ex:"Granite Pegmatite"},
+  ];
+
+  let h=`<div class="card"><h2>🔎 Texture</h2>
+  <p class="intro">Texture describes the <strong>size, shape, and arrangement of crystals</strong> in an igneous rock. It is controlled by the <em>rate of cooling</em> — slow cooling allows large crystals to grow, rapid cooling produces small or no crystals. Texture is the second key classification axis alongside composition.</p>
+  <div class="texture-grid">`;
+  textures.forEach(t=>{
+    h+=`<div class="tex-card"><div class="tex-name">${t.name}</div><div class="tex-rate">${t.rate}</div><div class="tex-desc">${t.desc}</div><div class="tex-ex">e.g. ${t.ex}</div></div>`;
+  });
+  h+=`</div>`;
+
+  h+=`<div class="section-divider">Cooling rate flowchart</div>
+  <div class="fc-wrap">
+  <svg width="700" height="280" viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;display:block">
+    <defs><marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#666"/></marker></defs>
+    <rect x="240" y="8" width="220" height="32" rx="6" fill="#fdf0ec" stroke="#b5451b" stroke-width="2"/>
+    <text x="350" y="29" text-anchor="middle" font-size="13" font-weight="600" fill="#b5451b">Where does the magma cool?</text>
+    <line x1="350" y1="40" x2="350" y2="62" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+    <polygon points="350,64 470,96 350,128 230,96" fill="#fff8e8" stroke="#f0a000" stroke-width="1.5"/>
+    <text x="350" y="89" text-anchor="middle" font-size="11" font-weight="600" fill="#7a5000">Underground</text>
+    <text x="350" y="105" text-anchor="middle" font-size="11" font-weight="600" fill="#7a5000">or surface?</text>
+    <line x1="230" y1="96" x2="120" y2="96" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="178" y="90" text-anchor="middle" font-size="11" fill="#2a6a2a">Underground</text>
+    <rect x="5" y="76" width="113" height="40" rx="6" fill="#edf7ed" stroke="#4caf50" stroke-width="1.5"/>
+    <text x="61" y="97" text-anchor="middle" font-size="11" font-weight="600" fill="#2a6a2a">PHANERITIC</text>
+    <text x="61" y="111" text-anchor="middle" font-size="10" fill="#444">Large crystals</text>
+    <line x1="470" y1="96" x2="562" y2="96" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="514" y="90" text-anchor="middle" font-size="11" fill="#b71c1c">Surface</text>
+    <rect x="564" y="60" width="128" height="72" rx="6" fill="#fdecea" stroke="#e53935" stroke-width="1.5"/>
+    <text x="628" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c">How fast?</text>
+    <text x="628" y="98" text-anchor="middle" font-size="10" fill="#444">Rapid → APHANITIC</text>
+    <text x="628" y="112" text-anchor="middle" font-size="10" fill="#444">Instant → GLASSY</text>
+    <text x="628" y="126" text-anchor="middle" font-size="10" fill="#444">With gas → VESICULAR</text>
+    <line x1="350" y1="128" x2="350" y2="150" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+    <polygon points="350,152 470,184 350,216 230,184" fill="#fff8e8" stroke="#f0a000" stroke-width="1.5"/>
+    <text x="350" y="179" text-anchor="middle" font-size="11" font-weight="600" fill="#7a5000">Did it start</text>
+    <text x="350" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#7a5000">underground then erupt?</text>
+    <line x1="470" y1="184" x2="562" y2="184" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="514" y="178" text-anchor="middle" font-size="11" fill="#2a6a2a">YES</text>
+    <rect x="564" y="164" width="128" height="40" rx="6" fill="#edf7ed" stroke="#4caf50" stroke-width="1.5"/>
+    <text x="628" y="185" text-anchor="middle" font-size="11" font-weight="600" fill="#2a6a2a">PORPHYRITIC</text>
+    <text x="628" y="199" text-anchor="middle" font-size="10" fill="#444">Two-stage cooling</text>
+    <line x1="230" y1="184" x2="120" y2="184" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="178" y="178" text-anchor="middle" font-size="11" fill="#b71c1c">NO</text>
+    <rect x="5" y="164" width="113" height="40" rx="6" fill="#f7f7f5" stroke="#ccc" stroke-width="1.5"/>
+    <text x="61" y="185" text-anchor="middle" font-size="11" color="#444">Review other</text>
+    <text x="61" y="199" text-anchor="middle" font-size="10" fill="#444">texture features</text>
+  </svg></div>`;
+
+  h+=quizHTML("texture",quiz)+"</div>";
+  return h;
+}
+
+function classificationHTML(){
+  const quiz={q:"You find a rock with a uniform dark gray color and crystals too fine to see individually. It has no vesicles. What is it?",
+    opts:["Gabbro","Basalt","Rhyolite","Andesite"],
+    ans:1,
+    expl:["Gabbro is also dark and mafic, but has coarse visible crystals (phaneritic texture).",
+          "Correct! Dark (mafic) + fine-grained (aphanitic) + no vesicles = Basalt.",
+          "Rhyolite is fine-grained but felsic — it would be light-colored (tan, cream, or pink).",
+          "Andesite is also fine-grained but intermediate — it would show a mix of light and dark, not uniformly dark."]};
+
+  return `<div class="card"><h2>🗂️ Classification</h2>
+  <p class="intro">Igneous rocks are classified using <strong>two axes: composition and texture</strong>. Once you determine the silica content (from color and minerals) and the cooling rate (from crystal size), the classification table below gives you the rock name.</p>
+  <div class="section-divider">Composition × Texture classification table</div>
+  <div style="overflow-x:auto;margin-bottom:14px">
+  <table class="cl-table">
+    <tr>
+      <th>Texture / Cooling rate</th>
+      <th>Felsic (&gt;65% SiO₂)<br><span style="font-weight:400;color:#888">Light colored</span></th>
+      <th>Intermediate (55–65%)<br><span style="font-weight:400;color:#888">Mixed light/dark</span></th>
+      <th>Mafic (45–55% SiO₂)<br><span style="font-weight:400;color:#888">Dark colored</span></th>
+    </tr>
+    <tr>
+      <td><strong>Phaneritic</strong><br><span style="font-size:11px;color:#888">Slow / Intrusive</span></td>
+      <td><strong>Granite</strong></td>
+      <td><strong>Diorite</strong></td>
+      <td><strong>Gabbro</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Aphanitic</strong><br><span style="font-size:11px;color:#888">Rapid / Extrusive</span></td>
+      <td><strong>Rhyolite</strong></td>
+      <td><strong>Andesite</strong></td>
+      <td><strong>Basalt</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Porphyritic</strong><br><span style="font-size:11px;color:#888">Two-stage / Mixed</span></td>
+      <td><strong>Rhyolite Porphyry</strong></td>
+      <td><strong>Andesite Porphyry</strong></td>
+      <td><strong>Basalt Porphyry</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Glassy</strong><br><span style="font-size:11px;color:#888">Instant quench</span></td>
+      <td colspan="3" style="text-align:center"><strong>Obsidian</strong> (felsic–intermediate) &nbsp;|&nbsp; <strong>Scoria / Tachylite</strong> (mafic)</td>
+    </tr>
+    <tr>
+      <td><strong>Vesicular</strong><br><span style="font-size:11px;color:#888">Rapid + gas escape</span></td>
+      <td colspan="2" style="text-align:center"><strong>Pumice</strong> (felsic, extremely frothy)</td>
+      <td><strong>Vesicular Basalt</strong></td>
+    </tr>
+  </table></div>
+  <div class="tip">💡 How to use the table: (1) Determine color → gives you composition column. (2) Determine crystal size → gives you texture row. (3) Find the cell where they intersect → that's your rock name.</div>
+  ${quizHTML("classification",quiz)}</div>`;
+}
+
+function tectonicsHTML(){
+  const quiz={q:"A geologist finds basalt on the seafloor at a mid-ocean ridge. What melting mechanism most likely produced the magma that formed it?",
+    opts:["Flux melting from water added by a subducting plate","Decompression melting as hot mantle rock rises and pressure decreases","Heat transfer from a nearby magma body","Decompression melting triggered by continental collision"],
+    ans:1,
+    expl:["Flux melting from water occurs at subduction zones, not mid-ocean ridges.",
+          "Correct! At mid-ocean ridges, hot mantle rock rises due to convection. As it ascends, pressure drops and it crosses the melting curve — producing mafic magma without any change in temperature.",
+          "Heat transfer (conduction) is a minor mechanism and not the primary driver at mid-ocean ridges.",
+          "Mid-ocean ridges are divergent boundaries, not sites of continental collision."]};
+
+  const settings=[
+    {icon:"🌊",name:"Mid-ocean ridges (divergent boundaries)",desc:"Hot mantle rock upwells as plates pull apart, pressure decreases, and decompression melting occurs. Produces mafic (basaltic) magma. The seafloor is almost entirely basalt formed this way. Cooling is rapid underwater — aphanitic or glassy textures result."},
+    {icon:"🏔️",name:"Subduction zones (convergent boundaries)",desc:"As oceanic crust subducts, it releases water and CO₂ into the overlying mantle wedge. This flux lowers the melting point and generates magma. The composition is intermediate to felsic (andesitic to rhyolitic). These form the volcanic arcs and mountain chains above subduction zones — like the Andes or Cascades."},
+    {icon:"🔥",name:"Hotspots (mantle plumes)",desc:"Unusually hot plumes of mantle material rise from deep in the mantle. Melting occurs through a combination of heat transfer and decompression. Often produces mafic (basaltic) magma. Hawaii and Yellowstone are well-known examples. The mechanism is not fully understood."},
+    {icon:"🏛️",name:"Continental interiors",desc:"Large volumes of felsic magma can form in continental settings through partial melting of continental crust. This produces granite batholiths — enormous intrusive bodies that form the cores of mountain ranges and cratons. The Sierra Nevada and Idaho Batholith are classic examples."},
+  ];
+
+  let h=`<div class="card"><h2>🌍 Igneous rocks &amp; tectonics</h2>
+  <p class="intro">The type of igneous rock that forms is directly linked to <em>where</em> on Earth the magma originates. Different tectonic settings produce different temperatures, pressures, and magma compositions — resulting in characteristic suites of igneous rocks.</p>`;
+  settings.forEach(s=>{
+    h+=`<div class="tect-row"><div class="tect-icon">${s.icon}</div><div><div class="tect-name">${s.name}</div><div class="tect-desc">${s.desc}</div></div></div>`;
+  });
+  h+=quizHTML("tectonics",quiz)+"</div>";
+  return h;
+}
+
+function profileHTML(){
+  const p1=work.profile1, p2=work.profile2;
+  let h=`<div class="card"><h2>📝 Igneous rock profile</h2>
+  <p class="intro">Choose two rocks from your identified samples and complete a short profile for each. A strong profile connects the rock's observable properties to its formation history and geological significance.</p>
+  <div class="example-box">
+    <div class="ex-title">Example — Basalt</div>
+    <div class="ex-line"><strong>Texture:</strong> Aphanitic (fine-grained) — cooled rapidly at the surface as extrusive lava</div>
+    <div class="ex-line"><strong>Composition:</strong> Mafic — dark color, dominated by pyroxene and Ca-plagioclase, low silica (~50%)</div>
+    <div class="ex-line"><strong>Tectonic setting:</strong> Mid-ocean ridges (decompression melting) and hotspot volcanoes</div>
+    <div class="ex-line"><strong>Property–formation connection:</strong> The fine-grained texture is a direct result of rapid cooling when mafic lava erupts on the seafloor or at the surface — crystals have no time to grow large. Its low silica content reflects its high-temperature origin in the mantle.</div>
+  </div>
+  <div style="font-size:14px;font-weight:600;margin-bottom:10px">Complete your two profiles below:</div>`;
+
+  [1,2].forEach(n=>{
+    const st=n===1?p1:p2;
+    h+=`<div class="profile-block"><div class="pb-title">Rock ${n}</div>
+      <label class="field-label">Rock name</label>
+      <select id="prock${n}"><option value="">Select a rock…</option>${ROCKS.map(r=>`<option value="${r}"${st.rock===r?" selected":""}>${r}</option>`).join("")}</select>
+      <label class="field-label">Texture and what it tells you about cooling history</label>
+      <textarea id="ptexture${n}" rows="2" placeholder="e.g. Phaneritic — large interlocking crystals indicate slow cooling deep underground over a long period">${st.texture}</textarea>
+      <label class="field-label">Composition and what it tells you about magma temperature</label>
+      <textarea id="pcomposition${n}" rows="2" placeholder="e.g. Felsic — light color and quartz/K-feldspar minerals indicate low-temperature origin (~700–800°C)">${st.composition}</textarea>
+      <label class="field-label">Tectonic setting where this rock typically forms</label>
+      <textarea id="ptectonic${n}" rows="1" placeholder="e.g. Continental crust / subduction zone / mid-ocean ridge / hotspot">${st.tectonic}</textarea>
+      <label class="field-label">How does a physical property connect to this rock's formation?</label>
+      <textarea id="pconnection${n}" rows="2" placeholder="e.g. The coarse grain size reflects millions of years of slow cooling underground — you can literally see the cooling history in the crystal size">${st.connection}</textarea>
+    </div>`;
+  });
+  h+="</div>";
+  return h;
+}
+
+function sectionHTML(id){
+  if(id==="intro") return introHTML();
+  if(id==="composition") return compositionHTML();
+  if(id==="bowens") return bowensHTML();
+  if(id==="texture") return textureHTML();
+  if(id==="classification") return classificationHTML();
+  if(id==="tectonics") return tectonicsHTML();
+  if(id==="profile") return profileHTML();
+  return "";
+}
+
+function render(){
+  buildNav();
+  const sec=SECTIONS[current];
+  document.getElementById("content").innerHTML=sectionHTML(sec.id);
+  document.getElementById("pgcount").textContent=(current+1)+" / "+SECTIONS.length;
+  document.getElementById("prev").disabled=current===0;
+  document.getElementById("next").disabled=current===SECTIONS.length-1;
+  window.scrollTo(0,0);
+}
+
+document.getElementById("prev").onclick=()=>{if(current>0){saveCurrent();current--;render();}};
+document.getElementById("next").onclick=()=>{if(current<SECTIONS.length-1){saveCurrent();current++;render();}};
+
+function exportWork(){
+  saveCurrent();
+  const name=document.getElementById("studentName").value||"Student";
+  const now=new Date().toLocaleString();
+  const qLabels=["intro","composition","bowens","texture","classification","tectonics"];
+  const qNames=["What are igneous rocks?","Composition","Bowen's Reaction Series","Texture","Classification","Igneous rocks & tectonics"];
+  const qData=[
+    {opts:["Forms from magma that slowly cools underground","Forms from lava that cools rapidly at the surface","Forms when sediments are compacted and cemented","Forms when rocks are subjected to heat and pressure"],ans:1},
+    {opts:["Felsic","Intermediate","Mafic","Ultramafic"],ans:2},
+    {opts:["Olivine","Pyroxene (Augite)","Potassium feldspar","Quartz"],ans:3},
+    {opts:["Phaneritic — cooled slowly underground throughout","Aphanitic — cooled rapidly at the surface throughout","Porphyritic — started cooling slowly, then erupted and cooled rapidly","Glassy — quenched instantly in water"],ans:2},
+    {opts:["Gabbro","Basalt","Rhyolite","Andesite"],ans:1},
+    {opts:["Flux melting from water added by a subducting plate","Decompression melting as hot mantle rock rises and pressure decreases","Heat transfer from a nearby magma body","Decompression melting triggered by continental collision"],ans:1},
+  ];
+
+  let out="IGNEOUS ROCK LAB — SUBMISSION\n";
+  out+="=====================================\n";
+  out+="Student: "+name+"\n";
+  out+="Submitted: "+now+"\n\n";
+  out+="SECTION 1: QUIZ ANSWERS\n";
+  out+="------------------------\n";
+  qLabels.forEach((id,i)=>{
+    const chosen=work.quizAnswers[id];
+    const correct=qData[i].ans;
+    const status=chosen===undefined?"Not attempted":(chosen===correct?"Correct":"Incorrect");
+    const chosenText=chosen!==undefined?qData[i].opts[chosen]:"—";
+    out+=`${qNames[i]}: ${chosenText} [${status}]\n`;
+  });
+  out+="\nSECTION 2: ROCK PROFILES\n";
+  out+="-------------------------\n";
+  [1,2].forEach(n=>{
+    const p=work[`profile${n}`];
+    out+=`\nRock ${n}: ${p.rock||"(not selected)"}\n`;
+    out+=`  Texture/cooling history: ${p.texture||"(blank)"}\n`;
+    out+=`  Composition/magma temperature: ${p.composition||"(blank)"}\n`;
+    out+=`  Tectonic setting: ${p.tectonic||"(blank)"}\n`;
+    out+=`  Property-formation connection: ${p.connection||"(blank)"}\n`;
+  });
+  out+="\n=====================================\n";
+  out+="End of submission.\n";
+  const blob=new Blob([out],{type:"text/plain"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="IgneousLab_"+(name.replace(/[^a-z0-9]/gi,"_"))+".txt";
+  a.click();
+}
+window.exportWork=exportWork;
+
+render();
+</script>
+</body>
+</html>

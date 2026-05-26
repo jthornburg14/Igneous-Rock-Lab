@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Earth Science Lab — Igneous Rock Identification</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f2f2ee;color:#1a1a1a;min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+h1{font-size:20px;font-weight:700;text-align:center;margin-bottom:2px}
+.tagline{font-size:13px;color:#666;text-align:center;margin-bottom:16px}
+.tabs{display:flex;gap:0;margin-bottom:18px;border-bottom:2px solid #ddd}
+.tab{padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:none;color:#666;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab:hover{color:#b5451b}
+.tab.active{color:#b5451b;border-bottom-color:#b5451b}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.sample-bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:18px}
+.sample-btn{width:44px;height:44px;border-radius:8px;border:1.5px solid #ccc;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#444;transition:all .15s}
+.sample-btn:hover{border-color:#b5451b;color:#b5451b}
+.sample-btn.active{background:#b5451b;border-color:#b5451b;color:#fff}
+.sample-btn.correct{border-color:#4caf50;color:#4caf50}
+.sample-btn.correct.active{background:#4caf50;border-color:#4caf50;color:#fff}
+.sample-btn.wrong{border-color:#e53935;color:#e53935}
+.sample-btn.wrong.active{background:#e53935;border-color:#e53935;color:#fff}
+.prog-wrap{background:#eee;border-radius:6px;height:8px;margin-bottom:4px;overflow:hidden}
+.prog-fill{height:100%;background:#4caf50;border-radius:6px;transition:width .4s}
+.prog-label{font-size:12px;color:#666;margin-bottom:14px}
+.main{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:580px){.main{grid-template-columns:1fr}}
+.photo-panel{background:#fff;border:1px solid #ddd;border-radius:10px;overflow:hidden}
+.photo-lbl{padding:9px 12px;font-size:13px;font-weight:600;color:#444;border-bottom:1px solid #eee}
+.photo-wrap{background:#111;height:230px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo-wrap img{max-width:100%;max-height:230px;object-fit:contain;display:block}
+.photo-err{color:#aaa;font-size:12px;text-align:center;padding:20px;line-height:1.6}
+.photo-toggle{display:flex;border-top:1px solid #eee}
+.photo-toggle button{flex:1;padding:7px;font-size:12px;background:#f7f7f5;border:none;cursor:pointer;color:#555}
+.photo-toggle button.active{background:#fdf0ec;color:#b5451b;font-weight:600}
+.obs-panel{background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px}
+.obs-title{font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.tg{margin-bottom:10px}
+.tg-label{font-size:12px;font-weight:600;color:#666;margin-bottom:4px}
+.tg-btns{display:flex;flex-wrap:wrap;gap:4px}
+.tbtn{padding:4px 10px;font-size:12px;border-radius:5px;border:1px solid #ccc;background:#f7f7f5;cursor:pointer;color:#333;transition:all .1s}
+.tbtn:hover{border-color:#b5451b;color:#b5451b}
+.tbtn.revealed{border-color:#b5451b;background:#fdf0ec;color:#b5451b;font-weight:600}
+.rbox{margin-top:5px;padding:6px 10px;border-radius:5px;font-size:12px;line-height:1.5;display:none}
+.rbox.show{display:block}
+.rbox.info{background:#fdf0ec;color:#7a2800;border:1px solid #e8b49a}
+.rbox.warn{background:#fff8e8;color:#7a5000;border:1px solid #f0c040}
+.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px;margin-bottom:14px}
+.card-title{font-size:14px;font-weight:700;margin-bottom:10px}
+.ws-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.ws-grid{grid-template-columns:1fr}}
+.wf label{font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px}
+.wf select,.wf textarea{width:100%;font-size:13px;padding:6px 8px;border:1.5px solid #ccc;border-radius:6px;background:#fff;font-family:inherit;color:#1a1a1a}
+.wf select:focus,.wf textarea:focus{outline:2px solid #b5451b;border-color:#b5451b}
+.wf select:disabled,.wf textarea:disabled{background:#f5f5f5;color:#888;cursor:not-allowed}
+.wf.full{grid-column:1/-1}
+.name-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.name-btn{padding:7px 8px;font-size:12px;border-radius:6px;border:1px solid #ccc;background:#f7f7f5;cursor:pointer;color:#333;text-align:center;transition:all .12s}
+.name-btn:hover:not(:disabled){border-color:#b5451b;color:#b5451b;background:#fdf0ec}
+.name-btn.selected{border-color:#b5451b;background:#b5451b;color:#fff;font-weight:600}
+.name-btn:disabled{cursor:not-allowed;opacity:.6}
+.name-btn.locked-correct{border-color:#4caf50!important;background:#edf7ed!important;color:#1b5e20!important;font-weight:600;opacity:1!important}
+.name-btn.locked-wrong{border-color:#e53935!important;background:#fdecea!important;color:#7f0000!important;font-weight:600;opacity:1!important}
+.action-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn-grade{padding:9px 22px;font-size:14px;font-weight:600;background:#b5451b;color:#fff;border:none;border-radius:7px;cursor:pointer}
+.btn-grade:hover:not(:disabled){background:#933a16}
+.btn-grade:disabled{background:#aaa;cursor:not-allowed}
+.btn-next{padding:9px 18px;font-size:14px;background:#fff;color:#b5451b;border:1.5px solid #b5451b;border-radius:7px;cursor:pointer;display:none}
+.btn-next:hover{background:#fdf0ec}
+.grade-banner{padding:12px 16px;border-radius:8px;font-size:14px;font-weight:600;margin-top:12px;display:none;line-height:1.6}
+.grade-banner.show{display:block}
+.grade-banner.pass{background:#edf7ed;border:1.5px solid #4caf50;color:#1b5e20}
+.grade-banner.fail{background:#fdecea;border:1.5px solid #e53935;color:#7f0000}
+.one-attempt-note{font-size:12px;color:#b71c1c;font-weight:600}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:14px}
+.ref-card{padding:10px 12px;background:#f7f7f5;border-radius:8px;border-top:3px solid #b5451b}
+.ref-name{font-size:13px;font-weight:700;margin-bottom:4px}
+.ref-row{font-size:12px;color:#555;line-height:1.6}
+.ref-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-right:3px;font-weight:600}
+.badge-felsic{background:#fdf0ec;color:#7a2800}
+.badge-intermediate{background:#fff8e8;color:#7a5000}
+.badge-mafic{background:#e8f0fb;color:#0d47a1}
+.badge-intrusive{background:#f3e5f5;color:#4a148c}
+.badge-extrusive{background:#e8f5e9;color:#1b5e20}
+.export-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:8px 16px;display:flex;justify-content:center;align-items:center;gap:10px;z-index:100;flex-wrap:wrap}
+.export-bar span{font-size:13px;color:#555}
+.btn-export{padding:7px 18px;font-size:13px;font-weight:600;background:#b5451b;color:#fff;border:none;border-radius:6px;cursor:pointer}
+.btn-export:hover{background:#933a16}
+input.name-input{font-size:13px;border:1px solid #ccc;border-radius:6px;padding:6px 10px;font-family:inherit;color:#1a1a1a;width:170px}
+.ref-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:8px}
+.ref-table th{background:#fdf0ec;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #e8b49a;font-size:12px}
+.ref-table td{padding:7px 10px;border:1px solid #ddd;vertical-align:top;line-height:1.5}
+.ref-table tr:nth-child(even) td{background:#f7f7f5}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Earth Science Lab — Igneous Rock Identification</h1>
+<p class="tagline">Physical Geology 2001 &nbsp;·&nbsp; Examine each sample, complete the worksheet, then submit your identification</p>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('identify')">🔬 Identify samples</button>
+  <button class="tab" onclick="switchTab('reference')">📋 Reference tables</button>
+</div>
+
+<!-- IDENTIFY TAB -->
+<div class="tab-panel active" id="tab-identify">
+  <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  <p class="prog-label" id="prog-label">0 of 9 samples attempted</p>
+  <div class="sample-bar" id="sample-bar"></div>
+
+  <div class="main">
+    <div class="photo-panel">
+      <div class="photo-lbl" id="sample-label">Sample 1</div>
+      <div class="photo-wrap">
+        <img id="photo-main" src="" alt="Igneous rock sample"
+          onerror="this.style.display='none';document.getElementById('photo-err').style.display='flex'">
+        <div id="photo-err" style="display:none;flex-direction:column;align-items:center;gap:8px;color:#aaa;font-size:12px;text-align:center;padding:20px">
+          <span style="font-size:28px">📷</span>
+          <span>Image not found.<br>Make sure the <strong>images/</strong> folder is uploaded<br>to your GitHub repository.</span>
+        </div>
+      </div>
+      <div class="photo-toggle">
+        <button id="btn-img1" class="active" onclick="switchPhoto(0)">Photo 1</button>
+        <button id="btn-img2" onclick="switchPhoto(1)">Photo 2</button>
+      </div>
+    </div>
+
+    <div class="obs-panel">
+      <div class="obs-title">Observation Prompts</div>
+      <div class="tg">
+        <div class="tg-label">Overall color / tone</div>
+        <div class="tg-btns"><button class="tbtn" onclick="runObs('color')">Observe</button></div>
+        <div class="rbox" id="color-result"></div>
+      </div>
+      <div class="tg">
+        <div class="tg-label">Texture — grain size</div>
+        <div class="tg-btns"><button class="tbtn" onclick="runObs('texture')">Observe</button></div>
+        <div class="rbox" id="texture-result"></div>
+      </div>
+      <div class="tg">
+        <div class="tg-label">Visible minerals / crystals</div>
+        <div class="tg-btns"><button class="tbtn" onclick="runObs('minerals')">Observe</button></div>
+        <div class="rbox" id="minerals-result"></div>
+      </div>
+      <div class="tg">
+        <div class="tg-label">Special features</div>
+        <div class="tg-btns"><button class="tbtn" onclick="runObs('special')">Observe</button></div>
+        <div class="rbox" id="special-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Igneous Rock Identification Worksheet</div>
+    <div class="ws-grid">
+      <div class="wf"><label>Overall color / appearance</label>
+        <select id="ws-color">
+          <option value="">— select —</option>
+          <option>Light — white, cream, pink</option>
+          <option>Mixed — light and dark</option>
+          <option>Dark — gray, green, black</option>
+          <option>Glassy / vitreous</option>
+          <option>Very light / frothy</option>
+        </select></div>
+      <div class="wf"><label>Composition (silica content)</label>
+        <select id="ws-composition">
+          <option value="">— select —</option>
+          <option>Felsic (high silica, &gt;65%)</option>
+          <option>Intermediate (55–65% silica)</option>
+          <option>Mafic (low silica, 45–55%)</option>
+        </select></div>
+      <div class="wf"><label>Texture</label>
+        <select id="ws-texture">
+          <option value="">— select —</option>
+          <option>Phaneritic (coarse-grained)</option>
+          <option>Aphanitic (fine-grained)</option>
+          <option>Porphyritic (mixed grain size)</option>
+          <option>Glassy (no crystals)</option>
+          <option>Vesicular glassy (glassy + voids)</option>
+          <option>Vesicular aphanitic (fine + voids)</option>
+        </select></div>
+      <div class="wf"><label>Intrusive or extrusive?</label>
+        <select id="ws-environment">
+          <option value="">— select —</option>
+          <option>Intrusive (cooled slowly underground)</option>
+          <option>Extrusive (cooled rapidly at surface)</option>
+          <option>Mixed / two-stage cooling</option>
+        </select></div>
+      <div class="wf full"><label>Notes / reasoning — how did you arrive at your identification?</label>
+        <textarea id="ws-notes" rows="2" placeholder="e.g. Dark color → mafic; fine-grained → aphanitic/extrusive; vesicles visible → vesicular basalt"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Select rock name &nbsp;<span class="one-attempt-note">⚠ One submission only — choose carefully</span></div>
+    <div class="name-grid" id="name-grid"></div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-grade" id="btn-grade" onclick="gradeID()">Submit identification</button>
+    <button class="btn-next" id="btn-next" onclick="nextSample()">Next sample →</button>
+  </div>
+  <div class="grade-banner" id="grade-banner"></div>
+</div>
+
+<!-- REFERENCE TAB -->
+<div class="tab-panel" id="tab-reference">
+  <div style="margin-bottom:16px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px">Classification Table — Composition × Texture</div>
+    <div style="overflow-x:auto">
+    <table class="ref-table">
+      <tr>
+        <th>Texture</th>
+        <th>Felsic (&gt;65% SiO₂)</th>
+        <th>Intermediate (55–65%)</th>
+        <th>Mafic (45–55% SiO₂)</th>
+      </tr>
+      <tr>
+        <td><strong>Phaneritic</strong><br><span style="font-size:11px;color:#888">Coarse-grained, slow cooling, intrusive</span></td>
+        <td><strong>Granite</strong></td>
+        <td><strong>Diorite</strong></td>
+        <td><strong>Gabbro</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Aphanitic</strong><br><span style="font-size:11px;color:#888">Fine-grained, rapid cooling, extrusive</span></td>
+        <td><strong>Rhyolite</strong></td>
+        <td><strong>Andesite</strong></td>
+        <td><strong>Basalt</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Porphyritic</strong><br><span style="font-size:11px;color:#888">Large phenocrysts in fine matrix, two-stage</span></td>
+        <td><strong>Rhyolite Porphyry</strong></td>
+        <td><strong>Andesite Porphyry</strong></td>
+        <td><strong>Basalt Porphyry</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Glassy</strong><br><span style="font-size:11px;color:#888">No crystals, quenched rapidly</span></td>
+        <td colspan="3" style="text-align:center"><strong>Obsidian</strong> (felsic–intermediate) &nbsp;|&nbsp; <strong>Scoria / Tachylite</strong> (mafic)</td>
+      </tr>
+      <tr>
+        <td><strong>Vesicular</strong><br><span style="font-size:11px;color:#888">Gas voids present</span></td>
+        <td colspan="2" style="text-align:center"><strong>Pumice</strong> (felsic, frothy)</td>
+        <td><strong>Vesicular Basalt</strong></td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div style="font-size:14px;font-weight:700;margin-bottom:10px">Quick-Reference: Sample Properties</div>
+  <div class="ref-grid" id="ref-grid"></div>
+</div>
+</div>
+
+<div class="export-bar">
+  <span>Name:</span>
+  <input type="text" class="name-input" id="studentName" placeholder="Your name">
+  <button class="btn-export" onclick="exportWork()">⬇ Download results</button>
+</div>
+
+<script>
+const ROCK_NAMES = [
+  "Andesite","Basalt","Diorite","Gabbro","Granite",
+  "Obsidian","Pumice","Rhyolite","Rhyolite Porphyry","Vesicular Basalt"
+];
+
+const SAMPLES = [
+  {num:1, name:"Andesite",
+   imgs:["images/andesite1.jpg","images/andesite2.jpg"],
+   color:"Medium gray-green; mixed light and dark minerals visible. Neither strongly light nor strongly dark.",
+   texture:"Fine-grained (aphanitic) — individual crystals too small to identify with the naked eye. Surface looks uniform and dense.",
+   minerals:"Small dark minerals (hornblende/pyroxene) scattered through a fine gray-green groundmass. No large individual crystals obvious.",
+   special:"Intermediate color is a key clue — not as light as granite/rhyolite, not as dark as basalt/gabbro. Common at subduction zone volcanoes.",
+   ws:{color:"Mixed — light and dark",composition:"Intermediate (55–65% silica)",texture:"Aphanitic (fine-grained)",environment:"Extrusive (cooled rapidly at surface)"}},
+
+  {num:2, name:"Basalt",
+   imgs:["images/basalt1.jpg","images/basalt2.jpg"],
+   color:"Dark olive-green to dark gray. Uniformly dark with very little light-colored material.",
+   texture:"Fine-grained (aphanitic) — grains too small to see individually. Surface appears smooth and uniform under magnification.",
+   minerals:"Crystals too fine to identify individually. Dominant minerals are pyroxene and Ca-rich plagioclase but not visible to the naked eye.",
+   special:"The most common volcanic rock on Earth. Dark color + fine-grained = mafic + extrusive. Forms at mid-ocean ridges and hotspot volcanoes.",
+   ws:{color:"Dark — gray, green, black",composition:"Mafic (low silica, 45–55%)",texture:"Aphanitic (fine-grained)",environment:"Extrusive (cooled rapidly at surface)"}},
+
+  {num:3, name:"Gabbro",
+   imgs:["images/gabbro1.jpg","images/gabbro2.jpg"],
+   color:"Dark gray to dark greenish-black. Dominated by dark minerals with some lighter feldspar visible.",
+   texture:"Coarse-grained (phaneritic) — individual crystals clearly visible to the naked eye, typically 1–5mm or larger.",
+   minerals:"Large visible crystals of dark pyroxene (augite) and grayish calcium-rich plagioclase feldspar. No quartz.",
+   special:"The intrusive equivalent of basalt — same composition, different cooling history. Forms deep in the crust at oceanic settings.",
+   ws:{color:"Dark — gray, green, black",composition:"Mafic (low silica, 45–55%)",texture:"Phaneritic (coarse-grained)",environment:"Intrusive (cooled slowly underground)"}},
+
+  {num:4, name:"Granite",
+   imgs:["images/granite1.jpg","images/granite2.jpg"],
+   color:"Light — cream, white, or pinkish overall with dark mineral flecks. Strongly light-colored.",
+   texture:"Coarse-grained (phaneritic) — all crystals easily visible to the naked eye, interlocking texture.",
+   minerals:"Large visible crystals of quartz (glassy/gray), potassium feldspar (pink or white), plagioclase (white), and biotite/hornblende (dark flecks).",
+   special:"The most common intrusive rock of the continental crust. Light color + coarse grains = felsic + intrusive. Often used as a building material.",
+   ws:{color:"Light — white, cream, pink",composition:"Felsic (high silica, >65%)",texture:"Phaneritic (coarse-grained)",environment:"Intrusive (cooled slowly underground)"}},
+
+  {num:5, name:"Obsidian",
+   imgs:["images/obsidian1.jpg","images/obsidian2.jpg"],
+   color:"Jet black, glassy and highly reflective. Conchoidal (shell-like) fracture surfaces visible.",
+   texture:"Glassy — no crystals at all. Cooled so rapidly that no mineral structure had time to form. Smooth, glass-like appearance.",
+   minerals:"No minerals present — obsidian is a volcanic glass, not a crystalline rock. Technically a mineraloid.",
+   special:"Conchoidal fracture and glassy luster are immediately diagnostic. Usually felsic in composition despite its black color — color here is due to iron and trace elements, not mafic mineralogy.",
+   ws:{color:"Glassy / vitreous",composition:"Felsic (high silica, >65%)",texture:"Glassy (no crystals)",environment:"Extrusive (cooled rapidly at surface)"}},
+
+  {num:6, name:"Pumice",
+   imgs:["images/pumice1.jpg","images/pumice2.jpg"],
+   color:"Very light — pale gray, cream, or white. Extremely light weight for its size.",
+   texture:"Vesicular glassy — frothy texture filled with many tiny gas vesicles (holes). The rock is largely empty space.",
+   minerals:"No minerals visible — glassy matrix. The rock is so vesicular it can float on water.",
+   special:"Extremely low density — feels almost weightless. Formed from gas-rich felsic lava that cooled almost instantaneously, trapping gas bubbles. Often associated with explosive eruptions.",
+   ws:{color:"Very light / frothy",composition:"Felsic (high silica, >65%)",texture:"Vesicular glassy (glassy + voids)",environment:"Extrusive (cooled rapidly at surface)"}},
+
+  {num:7, name:"Rhyolite",
+   imgs:["images/rhyolite1.jpg","images/rhyolite2.jpg"],
+   color:"Light tan, cream, or pinkish. Light color throughout — the fine-grained equivalent of granite.",
+   texture:"Fine-grained (aphanitic) — crystals too small to see individually. Surface looks smooth and uniform.",
+   minerals:"Crystals too fine to identify. Dominated by silica and feldspar minerals at a microscopic scale.",
+   special:"Light color + fine-grained = felsic + extrusive. The extrusive equivalent of granite. Associated with explosive eruptions at subduction zones and continental hotspots.",
+   ws:{color:"Light — white, cream, pink",composition:"Felsic (high silica, >65%)",texture:"Aphanitic (fine-grained)",environment:"Extrusive (cooled rapidly at surface)"}},
+
+  {num:8, name:"Vesicular Basalt",
+   imgs:["images/vesicular_basalt1.jpg","images/vesicular_basalt2.jpg"],
+   color:"Dark brown to dark gray-black. Overall strongly dark like regular basalt.",
+   texture:"Vesicular aphanitic — fine-grained basaltic groundmass with numerous gas vesicles (rounded holes) of varying sizes.",
+   minerals:"Matrix crystals too fine to identify. Vesicles may be empty or partially filled with secondary minerals.",
+   special:"The vesicles are key — gas bubbles were trapped as the lava solidified at the surface. Think of it as basalt that was still degassing as it cooled. Vesicles distinguish it from regular basalt.",
+   ws:{color:"Dark — gray, green, black",composition:"Mafic (low silica, 45–55%)",texture:"Vesicular aphanitic (fine + voids)",environment:"Extrusive (cooled rapidly at surface)"}},
+
+  {num:9, name:"Rhyolite Porphyry",
+   imgs:["images/rhyolite_porphyry1.jpg","images/rhyolite_porphyry2.jpg"],
+   color:"Light overall — cream or gray groundmass — but with scattered larger light-colored or dark phenocrysts.",
+   texture:"Porphyritic — distinct large crystals (phenocrysts) set in a fine-grained matrix (groundmass). Two very different grain sizes present.",
+   minerals:"Phenocrysts of feldspar and/or quartz visible to the naked eye. Fine-grained matrix surrounds them.",
+   special:"Two-stage cooling history: started cooling slowly (intrusive) forming the large phenocrysts, then erupted and cooled rapidly forming the fine matrix. The felsic composition of the groundmass (light color) distinguishes it from andesite porphyry.",
+   ws:{color:"Light — white, cream, pink",composition:"Felsic (high silica, >65%)",texture:"Porphyritic (mixed grain size)",environment:"Mixed / two-stage cooling"}},
+];
+
+// ===================== STATE =====================
+let current = 0;
+let photoIdx = 0;
+const results = {};
+SAMPLES.forEach(s=>{ results[s.num]={submitted:false,guess:"",correct:false,ws:{},notes:""}; });
+
+// ===================== TABS =====================
+function switchTab(id){
+  document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("active",["identify","reference"][i]===id));
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+  document.getElementById("tab-"+id).classList.add("active");
+  if(id==="reference") buildRefGrid();
+}
+window.switchTab=switchTab;
+
+// ===================== SAMPLE BAR =====================
+function buildSampleBar(){
+  const bar=document.getElementById("sample-bar");
+  bar.innerHTML="";
+  SAMPLES.forEach((s,i)=>{
+    const b=document.createElement("button");
+    const r=results[s.num];
+    let cls="sample-btn"+(i===current?" active":"");
+    if(r.submitted) cls+=r.correct?" correct":" wrong";
+    b.className=cls;
+    b.textContent=s.num;
+    b.title=r.submitted?s.name+" — "+(r.correct?"Correct ✓":"Incorrect ✗ (submitted: "+r.guess+")"):"Sample "+s.num;
+    b.onclick=()=>{ current=i; photoIdx=0; loadSample(); };
+    bar.appendChild(b);
+  });
+}
+
+function updateProgress(){
+  const done=SAMPLES.filter(s=>results[s.num].submitted).length;
+  document.getElementById("prog-fill").style.width=(done/SAMPLES.length*100)+"%";
+  document.getElementById("prog-label").textContent=done+" of "+SAMPLES.length+" samples attempted";
+}
+
+// ===================== LOAD SAMPLE =====================
+function loadSample(){
+  const s=SAMPLES[current];
+  const r=results[s.num];
+  document.getElementById("sample-label").textContent="Sample "+s.num;
+  switchPhoto(0);
+  ["color-result","texture-result","minerals-result","special-result"].forEach(id=>{
+    const el=document.getElementById(id);
+    el.className="rbox"; el.textContent=""; el.style.display="none";
+  });
+  document.querySelectorAll(".tbtn").forEach(b=>b.classList.remove("revealed"));
+  buildNameGrid();
+  ["color","composition","texture","environment"].forEach(f=>{
+    const el=document.getElementById("ws-"+f);
+    if(el){ el.value=r.ws[f]||""; el.disabled=r.submitted; }
+  });
+  const notes=document.getElementById("ws-notes");
+  if(notes){ notes.value=r.notes||""; notes.disabled=r.submitted; }
+  const btn=document.getElementById("btn-grade");
+  btn.disabled=r.submitted;
+  btn.textContent=r.submitted?"Submitted":"Submit identification";
+  const banner=document.getElementById("grade-banner");
+  if(r.submitted){
+    banner.className="grade-banner show "+(r.correct?"pass":"fail");
+    banner.innerHTML=r.correct
+      ?"✅ Correct! This sample is <strong>"+s.name+"</strong>."
+      :"✗ Incorrect. You submitted <strong>"+r.guess+"</strong>. The correct answer is <strong>"+s.name+"</strong>. Review the observation prompts and reference table to understand why.";
+    document.getElementById("btn-next").style.display=current<SAMPLES.length-1?"inline-block":"none";
+  } else {
+    banner.className="grade-banner"; banner.textContent="";
+    document.getElementById("btn-next").style.display="none";
+  }
+  buildSampleBar();
+  updateProgress();
+}
+
+function switchPhoto(idx){
+  photoIdx=idx;
+  const s=SAMPLES[current];
+  const img=document.getElementById("photo-main");
+  const err=document.getElementById("photo-err");
+  img.style.display="block"; err.style.display="none";
+  img.src=s.imgs[idx]||s.imgs[0];
+  img.onerror=function(){ this.style.display="none"; err.style.display="flex"; };
+  document.getElementById("btn-img1").classList.toggle("active",idx===0);
+  document.getElementById("btn-img2").classList.toggle("active",idx===1);
+}
+window.switchPhoto=switchPhoto;
+
+function runObs(type){
+  const s=SAMPLES[current];
+  const map={color:s.color,texture:s.texture,minerals:s.minerals,special:s.special};
+  const el=document.getElementById(type+"-result");
+  el.className="rbox info show"; el.style.display="block";
+  el.textContent=map[type];
+  const btn=el.previousElementSibling.querySelector(".tbtn");
+  if(btn) btn.classList.add("revealed");
+}
+window.runObs=runObs;
+
+function buildNameGrid(){
+  const r=results[SAMPLES[current].num];
+  const s=SAMPLES[current];
+  const grid=document.getElementById("name-grid");
+  grid.innerHTML="";
+  ROCK_NAMES.forEach(name=>{
+    const b=document.createElement("button");
+    let cls="name-btn";
+    if(r.submitted){
+      if(name===r.guess&&r.correct) cls+=" locked-correct";
+      else if(name===r.guess&&!r.correct) cls+=" locked-wrong";
+      else if(name===s.name&&!r.correct) cls+=" locked-correct";
+      b.disabled=true;
+    } else {
+      if(name===r.guess) cls+=" selected";
+    }
+    b.className=cls; b.textContent=name; b.disabled=r.submitted;
+    if(!r.submitted) b.onclick=()=>{
+      document.querySelectorAll(".name-btn").forEach(x=>x.classList.remove("selected"));
+      b.classList.add("selected");
+      results[SAMPLES[current].num].guess=name;
+    };
+    grid.appendChild(b);
+  });
+}
+
+function saveWS(){
+  const s=SAMPLES[current];
+  ["color","composition","texture","environment"].forEach(f=>{
+    const el=document.getElementById("ws-"+f);
+    if(el) results[s.num].ws[f]=el.value;
+  });
+  const notes=document.getElementById("ws-notes");
+  if(notes) results[s.num].notes=notes.value;
+}
+
+function gradeID(){
+  const s=SAMPLES[current];
+  const r=results[s.num];
+  if(r.submitted) return;
+  saveWS();
+  const guess=r.guess;
+  const banner=document.getElementById("grade-banner");
+  if(!guess){
+    banner.className="grade-banner fail show";
+    banner.textContent="Please select a rock name before submitting.";
+    return;
+  }
+  r.submitted=true;
+  r.correct=(guess===s.name);
+  ["color","composition","texture","environment"].forEach(f=>{
+    const el=document.getElementById("ws-"+f);
+    if(el) el.disabled=true;
+  });
+  const notes=document.getElementById("ws-notes");
+  if(notes) notes.disabled=true;
+  const btn=document.getElementById("btn-grade");
+  btn.disabled=true; btn.textContent="Submitted";
+  if(r.correct){
+    banner.className="grade-banner pass show";
+    banner.innerHTML="✅ Correct! This sample is <strong>"+s.name+"</strong>.";
+  } else {
+    banner.className="grade-banner fail show";
+    banner.innerHTML="✗ Incorrect. You submitted <strong>"+guess+"</strong>. The correct answer is <strong>"+s.name+"</strong>. Review the observation prompts and reference table to understand why.";
+  }
+  document.getElementById("btn-next").style.display=current<SAMPLES.length-1?"inline-block":"none";
+  buildNameGrid();
+  buildSampleBar();
+  updateProgress();
+}
+window.gradeID=gradeID;
+
+function nextSample(){
+  if(current<SAMPLES.length-1){ current++; photoIdx=0; loadSample(); window.scrollTo(0,0); }
+}
+window.nextSample=nextSample;
+
+// ===================== REFERENCE GRID =====================
+const REF_DATA = [
+  {name:"Granite",composition:"Felsic",environment:"Intrusive",texture:"Phaneritic",desc:"Light-colored, coarse-grained. Quartz + K-feldspar + biotite visible."},
+  {name:"Rhyolite",composition:"Felsic",environment:"Extrusive",texture:"Aphanitic",desc:"Light tan/pink, fine-grained. Fine-grained equivalent of granite."},
+  {name:"Rhyolite Porphyry",composition:"Felsic",environment:"Mixed",texture:"Porphyritic",desc:"Light groundmass with visible feldspar/quartz phenocrysts. Two-stage cooling."},
+  {name:"Obsidian",composition:"Felsic",environment:"Extrusive",texture:"Glassy",desc:"Black, glassy, conchoidal fracture. No crystals. Volcanic glass."},
+  {name:"Pumice",composition:"Felsic",environment:"Extrusive",texture:"Vesicular glassy",desc:"Very light, frothy, floats on water. Gas-rich explosive eruption product."},
+  {name:"Diorite",composition:"Intermediate",environment:"Intrusive",texture:"Phaneritic",desc:"Salt-and-pepper appearance. Plagioclase + hornblende, no quartz."},
+  {name:"Andesite",composition:"Intermediate",environment:"Extrusive",texture:"Aphanitic",desc:"Medium gray-green, fine-grained. Common at subduction zone volcanoes."},
+  {name:"Gabbro",composition:"Mafic",environment:"Intrusive",texture:"Phaneritic",desc:"Dark, coarse-grained. Pyroxene + Ca-plagioclase. Oceanic crust equivalent."},
+  {name:"Basalt",composition:"Mafic",environment:"Extrusive",texture:"Aphanitic",desc:"Dark, fine-grained. Most common volcanic rock. Mid-ocean ridges + hotspots."},
+  {name:"Vesicular Basalt",composition:"Mafic",environment:"Extrusive",texture:"Vesicular aphanitic",desc:"Dark basalt with gas vesicles (holes). Lava degassing during solidification."},
+];
+
+function buildRefGrid(){
+  const grid=document.getElementById("ref-grid");
+  if(grid.innerHTML!=="") return;
+  REF_DATA.forEach(r=>{
+    const compClass=r.composition==="Felsic"?"badge-felsic":r.composition==="Intermediate"?"badge-intermediate":"badge-mafic";
+    const envClass=r.environment==="Intrusive"?"badge-intrusive":r.environment==="Mixed"?"badge-intermediate":"badge-extrusive";
+    grid.innerHTML+=`<div class="ref-card">
+      <div class="ref-name">${r.name}</div>
+      <div class="ref-row"><span class="ref-badge ${compClass}">${r.composition}</span><span class="ref-badge ${envClass}">${r.environment}</span></div>
+      <div class="ref-row" style="margin-top:4px;font-style:italic;font-size:11px;color:#777">${r.texture}</div>
+      <div class="ref-row" style="margin-top:4px">${r.desc}</div>
+    </div>`;
+  });
+}
+
+// ===================== EXPORT =====================
+function exportWork(){
+  const studentName=document.getElementById("studentName").value||"Student";
+  const now=new Date().toLocaleString();
+  let out="IGNEOUS ROCK IDENTIFICATION LAB — RESULTS\n";
+  out+="==========================================\n";
+  out+="Student: "+studentName+"\n";
+  out+="Date: "+now+"\n\n";
+  const correct=SAMPLES.filter(s=>results[s.num].correct).length;
+  const attempted=SAMPLES.filter(s=>results[s.num].submitted).length;
+  out+="Score: "+correct+" / "+attempted+" correct ("+attempted+" of "+SAMPLES.length+" attempted)\n\n";
+  out+="SAMPLE-BY-SAMPLE RESULTS\n";
+  out+="------------------------\n";
+  SAMPLES.forEach(s=>{
+    const r=results[s.num];
+    out+="\nSample "+s.num+" ("+s.name+")\n";
+    out+="  Submitted answer: "+(r.guess||"(not submitted)")+"\n";
+    out+="  Result: "+(r.submitted?(r.correct?"CORRECT":"INCORRECT — correct answer: "+s.name):"Not attempted")+"\n";
+    const ws=r.ws;
+    if(ws&&Object.keys(ws).length>0){
+      out+="  Worksheet entries:\n";
+      const labels={color:"Color/appearance",composition:"Composition",texture:"Texture",environment:"Environment"};
+      Object.entries(labels).forEach(([k,v])=>{ if(ws[k]) out+="    "+v+": "+ws[k]+"\n"; });
+    }
+    if(r.notes) out+="  Notes/reasoning: "+r.notes+"\n";
+  });
+  out+="\n==========================================\n";
+  out+="End of submission — "+studentName+"\n";
+  const blob=new Blob([out],{type:"text/plain"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="IgneousID_"+(studentName.replace(/[^a-z0-9]/gi,"_"))+".txt";
+  a.click();
+}
+window.exportWork=exportWork;
+
+buildSampleBar();
+loadSample();
+</script>
+</body>
+</html>
