@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Igneous Rock Lab — Physical Geology 2001</title>
+<title>Igneous Rock Lab</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f4f0;color:#1a1a1a;min-height:100vh}
@@ -86,7 +86,7 @@ select:focus,textarea:focus,input[type=text]:focus{outline:2px solid #b5451b;bor
 <body>
 <div class="wrap">
 <h1>Igneous Rock Lab</h1>
-<p class="subtitle">Physical Geology 2001 &nbsp;·&nbsp; Read through all sections before identifying samples</p>
+<p class="subtitle">EES 2001 Physical Geology 2001 &nbsp;·&nbsp; Read through all sections before identifying samples</p>
 
 <div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
   <label style="font-size:13px;color:#555;white-space:nowrap">Your name:</label>
@@ -199,10 +199,10 @@ function introHTML(){
           "That describes metamorphic rock formation."]};
   return `<div class="card"><h2>🌋 What are igneous rocks?</h2>
   <p class="intro">Igneous rocks form from the cooling and solidification of molten rock. They are Earth's original rocks and make up the majority of the crust and mantle. Understanding where and how they form gives us a window into Earth's interior and tectonic history.</p>
-  <div class="criterion"><div class="cnum">1</div><div><div class="clabel">Magma vs. Lava</div><div class="cdesc">Molten rock beneath the surface is called <strong>magma</strong>. When it reaches the surface, it is called <strong>lava</strong>. Both produce igneous rocks — the difference is where they solidify.</div></div></div>
+  <div class="criterion"><div class="cnum">1</div><div><div class="clabel">Magma vs. Lava</div><div class="cdesc">Molten rock beneath the surface is called <strong>magma</strong>. When it reaches the surface, it is called <strong>lava</strong>. Both produce igneous rocks, the difference is where they solidify.</div></div></div>
   <div class="criterion"><div class="cnum">2</div><div><div class="clabel">Intrusive (Plutonic)</div><div class="cdesc">Magma that cools slowly <strong>beneath the surface</strong>. The slow cooling allows large crystals to grow. Examples: granite, gabbro, diorite.</div></div></div>
   <div class="criterion"><div class="cnum">3</div><div><div class="clabel">Extrusive (Volcanic)</div><div class="cdesc">Lava that cools rapidly <strong>at the surface</strong>. Rapid cooling produces small or no crystals. Examples: basalt, rhyolite, obsidian.</div></div></div>
-  <div class="tip" style="margin-top:10px">💡 Think of it this way: the Earth is a great insulator. Magma buried deep underground stays hot for millions of years. Lava on the surface loses heat rapidly to the air or ocean — sometimes in seconds.</div>
+  <div class="tip" style="margin-top:10px">💡 Think of it this way: the Earth is a great insulator. Magma buried deep underground stays hot for millions of years. Lava on the surface loses heat rapidly to the air or ocean, sometimes in seconds.</div>
   ${quizHTML("intro",quiz)}</div>`;
 }
 
@@ -213,9 +213,9 @@ function compositionHTML(){
     expl:["Felsic rocks are light-colored and dominated by quartz and K-feldspar.",
           "Intermediate rocks show a mix of light and dark minerals.",
           "Correct! Dark color, pyroxene, and Ca-plagioclase are all indicators of mafic composition.",
-          "Ultramafic rocks are dominated by olivine and pyroxene with no feldspar — even darker and denser than mafic."]};
+          "Ultramafic rocks are dominated by olivine and pyroxene with no feldspar; even darker and denser than mafic."]};
   return `<div class="card"><h2>🎨 Composition</h2>
-  <p class="intro">The composition of an igneous rock is determined by the <strong>silica (SiO₂) content</strong> of the original magma. Silica content controls which minerals crystallize and directly affects the rock's color — making color a useful first classification tool.</p>
+  <p class="intro">The composition of an igneous rock is determined by the <strong>silica (SiO₂) content</strong> of the original magma. Silica content controls which minerals crystallize and directly affects the rock's color, making color a useful first classification tool.</p>
   <div class="section-divider">Compositional categories</div>
   <div class="grid2">
     <div class="lcard" style="border-top-color:#e8a87c"><div class="lname">Felsic</div><div class="ldesc">65–75% SiO₂. Rich in silica and feldspar. Light-colored: whites, creams, pinks. Forms at relatively low temperatures (~650–800°C).</div><div class="lexample">Granite, Rhyolite, Obsidian, Pumice</div></div>
@@ -223,7 +223,7 @@ function compositionHTML(){
     <div class="lcard" style="border-top-color:#607090"><div class="lname">Mafic</div><div class="ldesc">45–55% SiO₂. Rich in magnesium and iron (MAFic). Dark-colored: dark grays, greens, blacks. Forms at high temperatures (~1000–1200°C).</div><div class="lexample">Gabbro, Basalt, Vesicular Basalt</div></div>
     <div class="lcard" style="border-top-color:#3a6040"><div class="lname">Ultramafic</div><div class="ldesc">&lt;45% SiO₂. Nearly all olivine and pyroxene. Very dark green. Forms at very high temperatures (&gt;1200°C). Rare at surface.</div><div class="lexample">Peridotite, Dunite</div></div>
   </div>
-  <div class="note">⚠️ Color is a useful guide but not absolute. Obsidian is black but is actually felsic in composition — its dark color comes from trace iron, not mafic mineralogy. Always consider texture and mineral content together with color.</div>
+  <div class="note">⚠️ Color is a useful guide but not absolute. Obsidian is black but is actually felsic in composition; its dark color comes from trace iron, not mafic mineralogy. Always consider texture and mineral content together with color.</div>
   ${quizHTML("composition",quiz)}</div>`;
 }
 
@@ -231,7 +231,7 @@ function bowensHTML(){
   const quiz={q:"According to Bowen's reaction series, which mineral crystallizes at the LOWEST temperature?",
     opts:["Olivine","Pyroxene (Augite)","Potassium feldspar","Quartz"],
     ans:3,
-    expl:["Olivine crystallizes at very high temperatures (~1200°C+) — it's the first mineral to form.",
+    expl:["Olivine crystallizes at very high temperatures (~1200°C+) - it's the first mineral to form.",
           "Pyroxene crystallizes at high temperatures, after olivine but well before feldspar and quartz.",
           "K-feldspar crystallizes at low temperature but quartz crystallizes last, at the very lowest temperatures.",
           "Correct! Quartz is the last mineral to crystallize in Bowen's series, at the lowest temperatures (~700–750°C). This is why it's so abundant in felsic rocks."]};
@@ -240,7 +240,7 @@ function bowensHTML(){
     {id:"b-high",tempClass:"b-high",temp:"High temp (~1200°C+)",
      minerals:"Olivine → Pyroxene (Augite)",
      rocks:"Ultramafic / Mafic",
-     detail:"At the highest temperatures, olivine is the first mineral to crystallize from a mafic magma. As cooling continues, olivine reacts with the melt to produce pyroxene. These minerals are very poor in silica and rich in iron and magnesium — giving mafic and ultramafic rocks their dark color. Rocks: Peridotite, Gabbro, Basalt."},
+     detail:"At the highest temperatures, olivine is the first mineral to crystallize from a mafic magma. As cooling continues, olivine reacts with the melt to produce pyroxene. These minerals are very poor in silica and rich in iron and magnesium; giving mafic and ultramafic rocks their dark color. Rocks: Peridotite, Gabbro, Basalt."},
     {id:"b-mid",tempClass:"b-mid",temp:"Intermediate temp (~900–1000°C)",
      minerals:"Amphibole (Hornblende) → Ca/Na-Plagioclase Feldspar",
      rocks:"Intermediate",
@@ -252,8 +252,8 @@ function bowensHTML(){
   ];
 
   let h=`<div class="card"><h2>🌡️ Bowen's Reaction Series</h2>
-  <p class="intro">N.L. Bowen experimentally determined the sequence in which minerals crystallize from a cooling magma. This sequence — called Bowen's Reaction Series — explains why different igneous rocks contain different minerals, and why composition is linked to temperature.</p>
-  <div class="section-divider">Three temperature tiers — click each to expand</div>`;
+  <p class="intro">N.L. Bowen experimentally determined the sequence in which minerals crystallize from a cooling magma. This sequence, called Bowen's Reaction Series, explains why different igneous rocks contain different minerals, and why composition is linked to temperature.</p>
+  <div class="section-divider">Three temperature tiers - click each to expand</div>`;
 
   tiers.forEach(t=>{
     h+=`<div class="bowens-row" id="${t.id}-row" onclick="toggleBowens('${t.id}')">
@@ -271,24 +271,24 @@ function bowensHTML(){
 
 function textureHTML(){
   const quiz={q:"A rock has large feldspar crystals (phenocrysts) surrounded by a very fine-grained gray matrix. What texture does it have, and what does this tell you about its cooling history?",
-    opts:["Phaneritic — cooled slowly underground throughout","Aphanitic — cooled rapidly at the surface throughout","Porphyritic — started cooling slowly, then erupted and cooled rapidly","Glassy — quenched instantly in water"],
+    opts:["Phaneritic: cooled slowly underground throughout","Aphanitic: cooled rapidly at the surface throughout","Porphyritic: started cooling slowly, then erupted and cooled rapidly","Glassy: quenched instantly in water"],
     ans:2,
-    expl:["Phaneritic rocks have uniformly large crystals throughout — no fine-grained matrix.",
-          "Aphanitic rocks have uniformly fine grains — no large phenocrysts.",
+    expl:["Phaneritic rocks have uniformly large crystals throughout, no fine-grained matrix.",
+          "Aphanitic rocks have uniformly fine grains, no large phenocrysts.",
           "Correct! The large phenocrysts formed during slow underground cooling; the fine matrix formed after the magma erupted and cooled rapidly. This two-stage history is the hallmark of porphyritic texture.",
-          "Glassy rocks have no crystals at all — they are volcanic glass."]};
+          "Glassy rocks have no crystals at all, they are volcanic glass."]};
 
   const textures=[
-    {name:"Phaneritic",rate:"Slow cooling — intrusive",desc:"All crystals are large enough to see with the naked eye (typically >1mm). Minerals are interlocked. Cooled slowly underground over millions of years.",ex:"Granite, Gabbro, Diorite"},
-    {name:"Aphanitic",rate:"Rapid cooling — extrusive",desc:"Crystals are too small to see individually without a microscope. Surface looks smooth and uniform. Cooled quickly at or near the surface.",ex:"Basalt, Rhyolite, Andesite"},
-    {name:"Porphyritic",rate:"Two-stage — mixed",desc:"Large crystals (phenocrysts) set in a fine-grained matrix (groundmass). Two clearly different grain sizes visible. Started slow (intrusive), then erupted.",ex:"Rhyolite Porphyry, Andesite Porphyry"},
-    {name:"Glassy",rate:"Extremely rapid — extrusive",desc:"No crystals at all — cooled so fast that atoms had no time to arrange into crystal structures. Smooth, glass-like texture with conchoidal fracture.",ex:"Obsidian"},
+    {name:"Phaneritic",rate:"Slow cooling - intrusive",desc:"All crystals are large enough to see with the naked eye (typically >1mm). Minerals are interlocked. Cooled slowly underground over millions of years.",ex:"Granite, Gabbro, Diorite"},
+    {name:"Aphanitic",rate:"Rapid cooling - extrusive",desc:"Crystals are too small to see individually without a microscope. Surface looks smooth and uniform. Cooled quickly at or near the surface.",ex:"Basalt, Rhyolite, Andesite"},
+    {name:"Porphyritic",rate:"Two-stage - mixed",desc:"Large crystals (phenocrysts) set in a fine-grained matrix (groundmass). Two clearly different grain sizes visible. Started slow (intrusive), then erupted.",ex:"Rhyolite Porphyry, Andesite Porphyry"},
+    {name:"Glassy",rate:"Extremely rapid - extrusive",desc:"No crystals at all - cooled so fast that atoms had no time to arrange into crystal structures. Smooth, glass-like texture with conchoidal fracture.",ex:"Obsidian"},
     {name:"Vesicular",rate:"Rapid cooling with gas",desc:"Contains numerous rounded holes (vesicles) formed by gas bubbles trapped during rapid solidification. Can be glassy or aphanitic.",ex:"Pumice (glassy), Vesicular Basalt (aphanitic)"},
     {name:"Pegmatitic",rate:"Very slow, water-rich",desc:"Extremely large crystals, often tens of centimeters. Water dissolved in the magma allows ions to migrate over great distances, growing massive crystals.",ex:"Granite Pegmatite"},
   ];
 
   let h=`<div class="card"><h2>🔎 Texture</h2>
-  <p class="intro">Texture describes the <strong>size, shape, and arrangement of crystals</strong> in an igneous rock. It is controlled by the <em>rate of cooling</em> — slow cooling allows large crystals to grow, rapid cooling produces small or no crystals. Texture is the second key classification axis alongside composition.</p>
+  <p class="intro">Texture describes the <strong>size, shape, and arrangement of crystals</strong> in an igneous rock. It is controlled by the <em>rate of cooling</em> - slow cooling allows large crystals to grow, rapid cooling produces small or no crystals. Texture is the second key classification axis alongside composition.</p>
   <div class="texture-grid">`;
   textures.forEach(t=>{
     h+=`<div class="tex-card"><div class="tex-name">${t.name}</div><div class="tex-rate">${t.rate}</div><div class="tex-desc">${t.desc}</div><div class="tex-ex">e.g. ${t.ex}</div></div>`;
@@ -343,8 +343,8 @@ function classificationHTML(){
     ans:1,
     expl:["Gabbro is also dark and mafic, but has coarse visible crystals (phaneritic texture).",
           "Correct! Dark (mafic) + fine-grained (aphanitic) + no vesicles = Basalt.",
-          "Rhyolite is fine-grained but felsic — it would be light-colored (tan, cream, or pink).",
-          "Andesite is also fine-grained but intermediate — it would show a mix of light and dark, not uniformly dark."]};
+          "Rhyolite is fine-grained but felsic, it would be light-colored (tan, cream, or pink).",
+          "Andesite is also fine-grained but intermediate, it would show a mix of light and dark, not uniformly dark."]};
 
   return `<div class="card"><h2>🗂️ Classification</h2>
   <p class="intro">Igneous rocks are classified using <strong>two axes: composition and texture</strong>. Once you determine the silica content (from color and minerals) and the cooling rate (from crystal size), the classification table below gives you the rock name.</p>
@@ -394,19 +394,19 @@ function tectonicsHTML(){
     opts:["Flux melting from water added by a subducting plate","Decompression melting as hot mantle rock rises and pressure decreases","Heat transfer from a nearby magma body","Decompression melting triggered by continental collision"],
     ans:1,
     expl:["Flux melting from water occurs at subduction zones, not mid-ocean ridges.",
-          "Correct! At mid-ocean ridges, hot mantle rock rises due to convection. As it ascends, pressure drops and it crosses the melting curve — producing mafic magma without any change in temperature.",
+          "Correct! At mid-ocean ridges, hot mantle rock rises due to convection. As it ascends, pressure drops and it crosses the melting curve, producing mafic magma without any change in temperature.",
           "Heat transfer (conduction) is a minor mechanism and not the primary driver at mid-ocean ridges.",
           "Mid-ocean ridges are divergent boundaries, not sites of continental collision."]};
 
   const settings=[
-    {icon:"🌊",name:"Mid-ocean ridges (divergent boundaries)",desc:"Hot mantle rock upwells as plates pull apart, pressure decreases, and decompression melting occurs. Produces mafic (basaltic) magma. The seafloor is almost entirely basalt formed this way. Cooling is rapid underwater — aphanitic or glassy textures result."},
-    {icon:"🏔️",name:"Subduction zones (convergent boundaries)",desc:"As oceanic crust subducts, it releases water and CO₂ into the overlying mantle wedge. This flux lowers the melting point and generates magma. The composition is intermediate to felsic (andesitic to rhyolitic). These form the volcanic arcs and mountain chains above subduction zones — like the Andes or Cascades."},
+    {icon:"🌊",name:"Mid-ocean ridges (divergent boundaries)",desc:"Hot mantle rock upwells as plates pull apart, pressure decreases, and decompression melting occurs. Produces mafic (basaltic) magma. The seafloor is almost entirely basalt formed this way. Cooling is rapid underwater, aphanitic or glassy textures result."},
+    {icon:"🏔️",name:"Subduction zones (convergent boundaries)",desc:"As oceanic crust subducts, it releases water and CO₂ into the overlying mantle wedge. This flux lowers the melting point and generates magma. The composition is intermediate to felsic (andesitic to rhyolitic). These form the volcanic arcs and mountain chains above subduction zones, like the Andes or Cascades."},
     {icon:"🔥",name:"Hotspots (mantle plumes)",desc:"Unusually hot plumes of mantle material rise from deep in the mantle. Melting occurs through a combination of heat transfer and decompression. Often produces mafic (basaltic) magma. Hawaii and Yellowstone are well-known examples. The mechanism is not fully understood."},
-    {icon:"🏛️",name:"Continental interiors",desc:"Large volumes of felsic magma can form in continental settings through partial melting of continental crust. This produces granite batholiths — enormous intrusive bodies that form the cores of mountain ranges and cratons. The Sierra Nevada and Idaho Batholith are classic examples."},
+    {icon:"🏛️",name:"Continental interiors",desc:"Large volumes of felsic magma can form in continental settings through partial melting of continental crust. This produces granite batholiths, enormous intrusive bodies that form the cores of mountain ranges and cratons. The Sierra Nevada and Idaho Batholith are classic examples."},
   ];
 
   let h=`<div class="card"><h2>🌍 Igneous rocks &amp; tectonics</h2>
-  <p class="intro">The type of igneous rock that forms is directly linked to <em>where</em> on Earth the magma originates. Different tectonic settings produce different temperatures, pressures, and magma compositions — resulting in characteristic suites of igneous rocks.</p>`;
+  <p class="intro">The type of igneous rock that forms is directly linked to <em>where</em> on Earth the magma originates. Different tectonic settings produce different temperatures, pressures, and magma compositions, resulting in characteristic suites of igneous rocks.</p>`;
   settings.forEach(s=>{
     h+=`<div class="tect-row"><div class="tect-icon">${s.icon}</div><div><div class="tect-name">${s.name}</div><div class="tect-desc">${s.desc}</div></div></div>`;
   });
@@ -419,11 +419,11 @@ function profileHTML(){
   let h=`<div class="card"><h2>📝 Igneous rock profile</h2>
   <p class="intro">Choose two rocks from your identified samples and complete a short profile for each. A strong profile connects the rock's observable properties to its formation history and geological significance.</p>
   <div class="example-box">
-    <div class="ex-title">Example — Basalt</div>
-    <div class="ex-line"><strong>Texture:</strong> Aphanitic (fine-grained) — cooled rapidly at the surface as extrusive lava</div>
-    <div class="ex-line"><strong>Composition:</strong> Mafic — dark color, dominated by pyroxene and Ca-plagioclase, low silica (~50%)</div>
+    <div class="ex-title">Example - Basalt</div>
+    <div class="ex-line"><strong>Texture:</strong> Aphanitic (fine-grained) - cooled rapidly at the surface as extrusive lava</div>
+    <div class="ex-line"><strong>Composition:</strong> Mafic - dark color, dominated by pyroxene and Ca-plagioclase, low silica (~50%)</div>
     <div class="ex-line"><strong>Tectonic setting:</strong> Mid-ocean ridges (decompression melting) and hotspot volcanoes</div>
-    <div class="ex-line"><strong>Property–formation connection:</strong> The fine-grained texture is a direct result of rapid cooling when mafic lava erupts on the seafloor or at the surface — crystals have no time to grow large. Its low silica content reflects its high-temperature origin in the mantle.</div>
+    <div class="ex-line"><strong>Property–formation connection:</strong> The fine-grained texture is a direct result of rapid cooling when mafic lava erupts on the seafloor or at the surface, crystals have no time to grow large. Its low silica content reflects its high-temperature origin in the mantle.</div>
   </div>
   <div style="font-size:14px;font-weight:600;margin-bottom:10px">Complete your two profiles below:</div>`;
 
@@ -433,13 +433,13 @@ function profileHTML(){
       <label class="field-label">Rock name</label>
       <select id="prock${n}"><option value="">Select a rock…</option>${ROCKS.map(r=>`<option value="${r}"${st.rock===r?" selected":""}>${r}</option>`).join("")}</select>
       <label class="field-label">Texture and what it tells you about cooling history</label>
-      <textarea id="ptexture${n}" rows="2" placeholder="e.g. Phaneritic — large interlocking crystals indicate slow cooling deep underground over a long period">${st.texture}</textarea>
+      <textarea id="ptexture${n}" rows="2" placeholder="e.g. Phaneritic, large interlocking crystals indicate slow cooling deep underground over a long period">${st.texture}</textarea>
       <label class="field-label">Composition and what it tells you about magma temperature</label>
-      <textarea id="pcomposition${n}" rows="2" placeholder="e.g. Felsic — light color and quartz/K-feldspar minerals indicate low-temperature origin (~700–800°C)">${st.composition}</textarea>
+      <textarea id="pcomposition${n}" rows="2" placeholder="e.g. Felsic, light color and quartz/K-feldspar minerals indicate low-temperature origin (~700–800°C)">${st.composition}</textarea>
       <label class="field-label">Tectonic setting where this rock typically forms</label>
       <textarea id="ptectonic${n}" rows="1" placeholder="e.g. Continental crust / subduction zone / mid-ocean ridge / hotspot">${st.tectonic}</textarea>
       <label class="field-label">How does a physical property connect to this rock's formation?</label>
-      <textarea id="pconnection${n}" rows="2" placeholder="e.g. The coarse grain size reflects millions of years of slow cooling underground — you can literally see the cooling history in the crystal size">${st.connection}</textarea>
+      <textarea id="pconnection${n}" rows="2" placeholder="e.g. The coarse grain size reflects millions of years of slow cooling underground, you can literally see the cooling history in the crystal size">${st.connection}</textarea>
     </div>`;
   });
   h+="</div>";
@@ -480,12 +480,12 @@ function exportWork(){
     {opts:["Forms from magma that slowly cools underground","Forms from lava that cools rapidly at the surface","Forms when sediments are compacted and cemented","Forms when rocks are subjected to heat and pressure"],ans:1},
     {opts:["Felsic","Intermediate","Mafic","Ultramafic"],ans:2},
     {opts:["Olivine","Pyroxene (Augite)","Potassium feldspar","Quartz"],ans:3},
-    {opts:["Phaneritic — cooled slowly underground throughout","Aphanitic — cooled rapidly at the surface throughout","Porphyritic — started cooling slowly, then erupted and cooled rapidly","Glassy — quenched instantly in water"],ans:2},
+    {opts:["Phaneritic - cooled slowly underground throughout","Aphanitic - cooled rapidly at the surface throughout","Porphyritic - started cooling slowly, then erupted and cooled rapidly","Glassy - quenched instantly in water"],ans:2},
     {opts:["Gabbro","Basalt","Rhyolite","Andesite"],ans:1},
     {opts:["Flux melting from water added by a subducting plate","Decompression melting as hot mantle rock rises and pressure decreases","Heat transfer from a nearby magma body","Decompression melting triggered by continental collision"],ans:1},
   ];
 
-  let out="IGNEOUS ROCK LAB — SUBMISSION\n";
+  let out="IGNEOUS ROCK LAB - SUBMISSION\n";
   out+="=====================================\n";
   out+="Student: "+name+"\n";
   out+="Submitted: "+now+"\n\n";
